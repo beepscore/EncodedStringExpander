@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE32C387218CB7C8005A259A /* Expander.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32C386218CB7C8005A259A /* Expander.swift */; };
+		DE32C38A218CB7E0005A259A /* ExpanderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32C389218CB7E0005A259A /* ExpanderTests.swift */; };
 		DE37987F218CB2880085E0C8 /* EncodedStringExpander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE379875218CB2880085E0C8 /* EncodedStringExpander.framework */; };
 		DE379886218CB2880085E0C8 /* EncodedStringExpander.h in Headers */ = {isa = PBXBuildFile; fileRef = DE379878218CB2880085E0C8 /* EncodedStringExpander.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DE3ADD14218CB45200A7A460 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DE3ADD13218CB45100A7A460 /* LICENSE */; };
@@ -24,6 +26,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DE32C386218CB7C8005A259A /* Expander.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expander.swift; sourceTree = "<group>"; };
+		DE32C388218CB7E0005A259A /* EncodedStringExpanderTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EncodedStringExpanderTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		DE32C389218CB7E0005A259A /* ExpanderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpanderTests.swift; sourceTree = "<group>"; };
 		DE379875218CB2880085E0C8 /* EncodedStringExpander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EncodedStringExpander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE379878218CB2880085E0C8 /* EncodedStringExpander.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EncodedStringExpander.h; sourceTree = "<group>"; };
 		DE379879218CB2880085E0C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				DE379878218CB2880085E0C8 /* EncodedStringExpander.h */,
+				DE32C386218CB7C8005A259A /* Expander.swift */,
 				DE379879218CB2880085E0C8 /* Info.plist */,
 			);
 			path = EncodedStringExpander;
@@ -84,6 +90,8 @@
 		DE379882218CB2880085E0C8 /* EncodedStringExpanderTests */ = {
 			isa = PBXGroup;
 			children = (
+				DE32C388218CB7E0005A259A /* EncodedStringExpanderTests-Bridging-Header.h */,
+				DE32C389218CB7E0005A259A /* ExpanderTests.swift */,
 				DE379885218CB2880085E0C8 /* Info.plist */,
 			);
 			path = EncodedStringExpanderTests;
@@ -151,9 +159,11 @@
 				TargetAttributes = {
 					DE379874218CB2880085E0C8 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 					DE37987D218CB2880085E0C8 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -199,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE32C387218CB7C8005A259A /* Expander.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE32C38A218CB7E0005A259A /* ExpanderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +357,7 @@
 		DE37988A218CB2880085E0C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -362,6 +375,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.beepscore.EncodedStringExpander;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -370,6 +384,7 @@
 		DE37988B218CB2880085E0C8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -395,6 +410,8 @@
 		DE37988D218CB2880085E0C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J2LXK9FK3W;
 				INFOPLIST_FILE = EncodedStringExpanderTests/Info.plist;
@@ -405,6 +422,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.beepscore.EncodedStringExpanderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "EncodedStringExpanderTests/EncodedStringExpanderTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -413,6 +432,8 @@
 		DE37988E218CB2880085E0C8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J2LXK9FK3W;
 				INFOPLIST_FILE = EncodedStringExpanderTests/Info.plist;
@@ -423,6 +444,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.beepscore.EncodedStringExpanderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "EncodedStringExpanderTests/EncodedStringExpanderTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
