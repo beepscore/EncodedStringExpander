@@ -40,4 +40,18 @@ struct Expander {
         return "foo"
     }
 
+    /// public for use by unit tests
+    static func multiplier(_ encoded: String) -> Int? {
+        guard let leftBracketIndex = encoded.firstIndex(of: "[") else { return nil }
+
+        let prefix = String(encoded[..<leftBracketIndex])
+
+        // remove non digit characters
+        // alternatively could use .filter and scalar view, might not be as robust
+        // https://stackoverflow.com/questions/36594179/remove-all-non-numeric-characters-from-a-string-in-swift#36607684
+        let digitsArray = prefix.components(separatedBy: CharacterSet.decimalDigits.inverted)
+        let digitsString = digitsArray.joined()
+        return Int(digitsString)
+    }
+
 }

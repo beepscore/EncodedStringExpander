@@ -20,7 +20,22 @@ class ExpanderTests: XCTestCase {
     }
 
     func testDecoded() {
-        XCTAssertEqual(Expander.decoded("2[a]"), "foo")
+        XCTAssertEqual(Expander.decoded("2[a]"), "aa")
+    }
+
+    func testMultiplierNil() {
+        XCTAssertNil(Expander.multiplier(""))
+        XCTAssertNil(Expander.multiplier("[a]"))
+    }
+
+    func testMultiplier() {
+        XCTAssertEqual(Expander.multiplier("2[a]"), 2)
+        XCTAssertEqual(Expander.multiplier("3[ab]"), 3)
+        XCTAssertEqual(Expander.multiplier("3[ab]4[c]"), 3)
+    }
+
+    func testMultiplierEncodedMalformed() {
+        XCTAssertNil(Expander.multiplier("[5]"))
     }
 
 }
