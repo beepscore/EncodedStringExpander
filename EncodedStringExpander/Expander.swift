@@ -58,9 +58,9 @@ struct Expander {
     /// public for use by unit tests
 
     static func multiplier(_ encoded: String) -> Int? {
-        guard let leftBracketIndex = encoded.firstIndex(of: "[") else { return nil }
+        guard let firstLeftBracketIndex = encoded.firstIndex(of: "[") else { return nil }
 
-        let prefix = String(encoded[..<leftBracketIndex])
+        let prefix = String(encoded[..<firstLeftBracketIndex])
 
         // remove non digit characters
         // alternatively could use .filter and scalar view, might not be as robust
