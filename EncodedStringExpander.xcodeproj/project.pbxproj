@@ -10,6 +10,8 @@
 		DE37987F218CB2880085E0C8 /* EncodedStringExpander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE379875218CB2880085E0C8 /* EncodedStringExpander.framework */; };
 		DE379884218CB2880085E0C8 /* EncodedStringExpanderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE379883218CB2880085E0C8 /* EncodedStringExpanderTests.swift */; };
 		DE379886218CB2880085E0C8 /* EncodedStringExpander.h in Headers */ = {isa = PBXBuildFile; fileRef = DE379878218CB2880085E0C8 /* EncodedStringExpander.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DE3ADD14218CB45200A7A460 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DE3ADD13218CB45100A7A460 /* LICENSE */; };
+		DE3ADD16218CB45F00A7A460 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DE3ADD15218CB45F00A7A460 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,8 @@
 		DE37987E218CB2880085E0C8 /* EncodedStringExpanderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EncodedStringExpanderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE379883218CB2880085E0C8 /* EncodedStringExpanderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodedStringExpanderTests.swift; sourceTree = "<group>"; };
 		DE379885218CB2880085E0C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE3ADD13218CB45100A7A460 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		DE3ADD15218CB45F00A7A460 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 		DE37986B218CB2880085E0C8 = {
 			isa = PBXGroup;
 			children = (
+				DE3ADD15218CB45F00A7A460 /* README.md */,
+				DE3ADD13218CB45100A7A460 /* LICENSE */,
 				DE379877218CB2880085E0C8 /* EncodedStringExpander */,
 				DE379882218CB2880085E0C8 /* EncodedStringExpanderTests */,
 				DE379876218CB2880085E0C8 /* Products */,
@@ -177,6 +183,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE3ADD16218CB45F00A7A460 /* README.md in Resources */,
+				DE3ADD14218CB45200A7A460 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
