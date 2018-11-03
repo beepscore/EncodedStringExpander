@@ -26,10 +26,10 @@ class ExpanderTests: XCTestCase {
         XCTAssertEqual(Expander.decoded("3[ab]4[c]"), "abababcccc")
     }
 
-    func testSubstrings() {
-        XCTAssertEqual(Expander.substrings("2[ab]"), ["2[ab]"])
-        XCTAssertEqual(Expander.substrings("[a]2[bc]"), ["[a]", "2[bc]"])
-        XCTAssertEqual(Expander.substrings("2[a][bc]"), ["2[a]", "[bc]"])
+    func testSequentialExpressions() {
+        XCTAssertEqual(Expander.sequentialExpressions("2[ab]"), ["2[ab]"])
+        XCTAssertEqual(Expander.sequentialExpressions("[a]2[bc]"), ["[a]", "2[bc]"])
+        XCTAssertEqual(Expander.sequentialExpressions("2[a][bc]"), ["2[a]", "[bc]"])
     }
 
     func testMultiplierNil() {

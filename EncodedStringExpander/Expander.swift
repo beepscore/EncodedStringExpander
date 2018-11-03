@@ -10,23 +10,23 @@ import Foundation
 
 struct Expander {
 
-    /// Takes an encoded string, fully expands it and returns the decoded string.
+    /// Expands an encoded string of one or more sequential and/or nested expressions.
     ///
     /// Examples:
     ///
     /// encoded string -> decoded string
     ///
-    ///  "2[ab]"  "abab"
+    ///  "2[ab]" -> "abab"
     ///
-    /// "3[[a]2[bc]]" "abcbcabcbcabcbc"
+    /// "3[[a]2[bc]]" -> "abcbcabcbcabcbc"
     ///
     ///  If multiplier prefix is absent use 1 as the implicit default.
     ///
-    ///  "[ef]" "ef"
+    ///  "[ef]" -> "ef"
     ///
     ///  The multiplier distributes only over immediatedly following substring
     ///
-    ///  "2[a][b]" "aab"
+    ///  "2[a][bc]" -> "aabc"
     ///
     /// Assumes the encoded string is not malformed.
     ///
@@ -42,11 +42,11 @@ struct Expander {
         guard let encoded = encoded else { return "" }
         if encoded == "" { return "" }
 
-        let substrings = Expander.substrings(encoded)
+        let sequentialExpressions = Expander.sequentialExpressions(encoded)
 
         var concatenated = ""
-        for substring in substrings {
-            concatenated += Expander.decodedSubstring(substring)
+        for expression in sequentialExpressions {
+            concatenated += Expander.decodedSubstring(expression)
         }
 
         return concatenated
@@ -55,19 +55,19 @@ struct Expander {
     //////////////////////////////////////////////////
     /// methods below are public for use by unit tests
 
-    /// Takes an encoded string, returns substrings including multipliers.
+    /// Parses an encoded string into sequential expressions
     /// If encoded contains any pattern "a[", "][", "]d", "]^d" then it has sequential expressions
     ///
     /// Examples:
     ///
-    /// encoded string -> substrings
+    /// encoded string -> sequential expressions
     ///
     ///    "2[ab]" ->  ["2[ab]"]
     /// "[a]2[bc]" ->  ["[a]", "2[bc]"]
     /// "2[a][bc]" ->  ["2[a]", "[bc]"]
     /// - Parameter encoded: the encoded string
-    /// - Returns: substrings. array may be empty
-    static func substrings(_ encoded: String) -> [String] {
+    /// - Returns:  sequential expressions including multipliers. May return empty array []
+    static func sequentialExpressions(_ encoded: String) -> [String] {
         
         // insert a separator
         let separator = ","
@@ -77,7 +77,6 @@ struct Expander {
         if components.last == "" {
             _ = components.popLast()
         }
-
         return components
     }
 
