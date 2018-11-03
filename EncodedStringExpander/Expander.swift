@@ -142,4 +142,27 @@ struct Expander {
         return innerString
     }
 
+    //////////////
+    /// - Parameter encoded: encoded string
+    /// - Returns: an array from splitting encoded at each bracket "[" or "]"
+    static func splitAtBrackets(_ encoded: String?) -> [String] {
+
+        // base cases
+        guard let encoded = encoded else { return [] }
+        if encoded == "" { return [] }
+
+        // insert a separator
+        let separator = ","
+        var encodedWithSeparator = encoded
+            .replacingOccurrences(of: "]", with: "\(separator)]\(separator)")
+        encodedWithSeparator = encodedWithSeparator
+            .replacingOccurrences(of: "[", with: "\(separator)[\(separator)")
+
+        var components =  encodedWithSeparator.components(separatedBy: separator)
+
+        // remove any empty strings
+        components = components.filter {$0 != ""}
+        return components
+    }
+
 }

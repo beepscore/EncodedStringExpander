@@ -40,6 +40,12 @@ class ExpanderTests: XCTestCase {
                        ["[ab]", "3[[c]4[d]]"])
     }
 
+    func testSplitAtBrackets() {
+        XCTAssertEqual(Expander.splitAtBrackets("[ab]3[[c]4[d]]"),
+                       ["[", "ab", "]", "3", "[", "[", "c", "]", "4", "[", "d", "]", "]"])
+    }
+
+
 
     func testMultiplierNil() {
         XCTAssertNil(Expander.multiplier(""))
