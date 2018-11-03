@@ -17,6 +17,9 @@ class ExpanderTests: XCTestCase {
         XCTAssertEqual(Expander.decoded("3[ab]"), "ababab")
         XCTAssertEqual(Expander.decoded("2[a][bc]"), "aabc")
         XCTAssertEqual(Expander.decoded("3[ab]4[c]"), "abababcccc")
+
+        // FIXME:
+        //XCTAssertEqual(Expander.decoded("2[[ab]3[[c]4[d]]]"), "abcddddcddddcddddabcddddcddddcdddd")
     }
 
     func testSequentialExpressions() {
@@ -24,6 +27,17 @@ class ExpanderTests: XCTestCase {
         XCTAssertEqual(Expander.sequentialExpressions("[a]2[bc]"), ["[a]", "2[bc]"])
         XCTAssertEqual(Expander.sequentialExpressions("2[a][bc]"), ["2[a]", "[bc]"])
     }
+
+    func testSequentialExpressionsNested() {
+        // FIXME:
+        // Test fails.
+        // sequentialExpressions has a bug
+        // it is going into a nested level instead of staying at top level
+        // May be simpler to change approach, split into a stack and merge.
+        XCTAssertEqual(Expander.sequentialExpressions("[ab]3[[c]4[d]]"),
+                       ["[ab]", "3[[c]4[d]]"])
+    }
+
 
     func testMultiplierNil() {
         XCTAssertNil(Expander.multiplier(""))
