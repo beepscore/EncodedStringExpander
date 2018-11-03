@@ -22,6 +22,14 @@ class ExpanderTests: XCTestCase {
     func testDecoded() {
         XCTAssertEqual(Expander.decoded("2[a]"), "aa")
         XCTAssertEqual(Expander.decoded("3[ab]"), "ababab")
+        XCTAssertEqual(Expander.decoded("2[a][bc]"), "aabc")
+        XCTAssertEqual(Expander.decoded("3[ab]4[c]"), "abababcccc")
+    }
+
+    func testSubstrings() {
+        XCTAssertEqual(Expander.substrings("2[ab]"), ["2[ab]"])
+        XCTAssertEqual(Expander.substrings("[a]2[bc]"), ["[a]", "2[bc]"])
+        XCTAssertEqual(Expander.substrings("2[a][bc]"), ["2[a]", "[bc]"])
     }
 
     func testMultiplierNil() {
@@ -42,9 +50,7 @@ class ExpanderTests: XCTestCase {
     func testInnerString() {
         XCTAssertEqual(Expander.innerString("2[a]"), "a")
         XCTAssertEqual(Expander.innerString("3[ab]"), "ab")
-
-        // TODO: consider improve innerString to handle this case
-        // XCTAssertEqual(Expander.innerString("3[ab]4[c]"), "ab")
+        XCTAssertEqual(Expander.innerString("3[[ab]4[c]]"), "[ab]4[c]")
     }
 
 }
