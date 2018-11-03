@@ -20,6 +20,7 @@ class ExpanderTests: XCTestCase {
     }
 
     func testDecoded() {
+        XCTAssertEqual(Expander.decoded("[ef]"), "ef")
         XCTAssertEqual(Expander.decoded("2[a]"), "aa")
         XCTAssertEqual(Expander.decoded("3[ab]"), "ababab")
         XCTAssertEqual(Expander.decoded("2[a][bc]"), "aabc")
