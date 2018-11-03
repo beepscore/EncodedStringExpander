@@ -40,7 +40,7 @@ struct Expander {
 
         // base cases
         guard let encoded = encoded else { return "" }
-        if encoded == "" { return "" }
+        if encoded.isEmpty { return "" }
 
         // parse sequential expressions
         let sequentialExpressions = Expander.sequentialExpressions(encoded)
@@ -87,11 +87,11 @@ struct Expander {
     static func decodedExpression(_ encoded: String?) -> String {
 
         guard let encoded = encoded else { return "" }
-        if encoded == "" { return "" }
+        if encoded.isEmpty { return "" }
 
         guard let inner = Expander.innerString(encoded) else { return "" }
 
-        if inner == "" { return inner }
+        if inner.isEmpty { return inner }
         if inner == encoded {
             // encoded doesn't have a multiplier
             return inner
@@ -149,7 +149,7 @@ struct Expander {
 
         // base cases
         guard let encoded = encoded else { return [] }
-        if encoded == "" { return [] }
+        if encoded.isEmpty { return [] }
 
         // insert a separator
         let separator = ","
@@ -161,7 +161,7 @@ struct Expander {
         var components =  encodedWithSeparator.components(separatedBy: separator)
 
         // remove any empty strings
-        components = components.filter {$0 != ""}
+        components = components.filter {!$0.isEmpty}
         return components
     }
 
