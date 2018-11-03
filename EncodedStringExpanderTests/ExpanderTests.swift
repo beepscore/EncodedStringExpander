@@ -17,9 +17,11 @@ class ExpanderTests: XCTestCase {
         XCTAssertEqual(Expander.decoded("3[ab]"), "ababab")
         XCTAssertEqual(Expander.decoded("2[a][bc]"), "aabc")
         XCTAssertEqual(Expander.decoded("3[ab]4[c]"), "abababcccc")
+    }
 
+    func testDecodedNested() {
         // FIXME:
-        //XCTAssertEqual(Expander.decoded("2[[ab]3[[c]4[d]]]"), "abcddddcddddcddddabcddddcddddcdddd")
+        XCTAssertEqual(Expander.decoded("2[1[ab]3[[c]4[d]]]"), "abcddddcddddcddddabcddddcddddcdddd")
     }
 
     func testSequentialExpressions() {
