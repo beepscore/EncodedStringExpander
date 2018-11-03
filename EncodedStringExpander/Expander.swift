@@ -42,11 +42,15 @@ struct Expander {
         guard let encoded = encoded else { return "" }
         if encoded == "" { return "" }
 
+        // parse sequential expressions
         let sequentialExpressions = Expander.sequentialExpressions(encoded)
 
         var concatenated = ""
         for expression in sequentialExpressions {
-            concatenated += Expander.decodedSubstring(expression)
+
+            // parse nested expressions
+            // decodedExpression may call decoded, so this may recurse
+            concatenated += Expander.decodedExpression(expression)
         }
 
         return concatenated
@@ -80,7 +84,7 @@ struct Expander {
         return components
     }
 
-    static func decodedSubstring(_ encoded: String?) -> String {
+    static func decodedExpression(_ encoded: String?) -> String {
 
         guard let encoded = encoded else { return "" }
         if encoded == "" { return "" }
