@@ -83,14 +83,7 @@ struct Expander {
         // base cases
         guard let splits = splits else { return [] }
 
-        var isSplitsFullyExpanded = true
-        for element in splits {
-            if !element.isNotDigitsAndNotSquareBrackets() {
-                isSplitsFullyExpanded = false
-                break
-            }
-        }
-        if isSplitsFullyExpanded { return splits }
+        if isSplitsFullyExpanded(splits) { return splits }
 
         // "]" is always the end of an expression
         guard let expressionEndIndex = splits.firstIndex(of: "]") else {
@@ -141,14 +134,29 @@ struct Expander {
 
         newSplits += newSplitsTail
 
-        let splitsCondensed = Expander.condensedSplits(newSplits)
+        let splitsCondensed = condensedSplits(newSplits)
 
         return decodedSplits(splitsCondensed)
     }
 
+    /// - Parameter splits: array originally from splitting encoded at each bracket "[" or "]"
+    ///   splits may have been processed to alter elements
+    /// - Returns: true if every element is "letters", i.e. not digits and not a square bracket
+    static func isSplitsFullyExpanded(_ splits: [String]) -> Bool {
+
+        var isFullyExpanded = true
+        for element in splits {
+            if !element.isNotDigitsAndNotSquareBrackets() {
+                isFullyExpanded = false
+                break
+            }
+        }
+        return isFullyExpanded
+    }
+
     // TODO: Consider may be able to increase efficiency by only processing last 2 elements
-    /// - Parameter splits: array from splitting encoded at each bracket "[" or "]"
-    ///   splits may have been processed to have adjacent elements that are alpha
+    /// - Parameter splits: array originally from splitting encoded at each bracket "[" or "]"
+    ///   splits may have been processed to alter elements
     /// - Returns: array by joining any adjacent elements that are alpha
     static func condensedSplits(_ splits: [String]) -> [String] {
         // make a pass to join any adjacent letter elements

@@ -46,6 +46,25 @@ class ExpanderTests: XCTestCase {
                        ["abcddddcddddcddddabcddddcddddcdddd"])
     }
 
+    func testIsSplitsFullyExpandedTrue() {
+        var splits = [String]()
+        XCTAssertTrue(Expander.isSplitsFullyExpanded(splits))
+
+        XCTAssertTrue(Expander.isSplitsFullyExpanded(["a"]))
+
+        splits = ["abc", "def"]
+        XCTAssertTrue(Expander.isSplitsFullyExpanded(splits))
+    }
+
+    func testIsSplitsFullyExpandedFalse() {
+        XCTAssertFalse(Expander.isSplitsFullyExpanded(["["]))
+        XCTAssertFalse(Expander.isSplitsFullyExpanded(["]"]))
+        XCTAssertFalse(Expander.isSplitsFullyExpanded(["3"]))
+
+        let splits = ["ab", "3", "[", "c", "dddd", "]"]
+        XCTAssertFalse(Expander.isSplitsFullyExpanded(splits))
+    }
+
     func testCondensedSplits() {
         var splits = [String]()
         XCTAssertEqual(Expander.condensedSplits(splits), [])
