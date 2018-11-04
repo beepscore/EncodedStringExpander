@@ -39,8 +39,19 @@ class ExpanderTests: XCTestCase {
     }
 
     func testDecoded2Nested() {
-        // FIXME:
+        XCTAssertEqual(Expander.decoded2("3[[c]2[d]]"), "cddcddcdd")
+
         XCTAssertEqual(Expander.decoded2("2[1[ab]3[[c]4[d]]]"), "abcddddcddddcddddabcddddcddddcdddd")
+    }
+
+    func testDecodedSplits() {
+        var splits = ["3", "[", "[", "c", "]", "2", "[", "d", "]", "]"]
+        XCTAssertEqual(Expander.decodedSplits(splits),
+                       ["cddcddcdd"])
+
+        splits = Expander.splitAtBrackets("2[1[ab]3[[c]4[d]]]")
+        XCTAssertEqual(Expander.decodedSplits(splits),
+                       ["abcddddcddddcddddabcddddcddddcdddd"])
     }
 
     func testSequentialExpressions() {
@@ -60,6 +71,9 @@ class ExpanderTests: XCTestCase {
     }
 
     func testSplitAtBrackets() {
+        XCTAssertEqual(Expander.splitAtBrackets("3[[c]2[d]]"),
+                       ["3", "[", "[", "c", "]", "2", "[", "d", "]", "]"])
+
         XCTAssertEqual(Expander.splitAtBrackets("[ab]3[[c]4[d]]"),
                        ["[", "ab", "]", "3", "[", "[", "c", "]", "4", "[", "d", "]", "]"])
     }

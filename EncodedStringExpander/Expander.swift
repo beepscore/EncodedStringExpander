@@ -193,7 +193,6 @@ struct Expander {
         }
         if isSplitsFullyExpanded { return splits }
 
-
         // "]" is always the end of an expression
         guard let expressionEndIndex = splits.firstIndex(of: "]") else {
             return splits
@@ -235,7 +234,8 @@ struct Expander {
         newSplits.append(expressionExpanded)
 
         var newSplitsTail = [String]()
-        if expressionSplits.endIndex < splits.endIndex - 1 {
+        //if expressionSplits.endIndex < splits.endIndex - 1 {
+        if expressionSplits.endIndex < splits.endIndex {
             // expression ends before end of splits
             let newSplitsTailStartIndex = splits.index(after: expressionEndIndex)
             newSplitsTail = Array(splits[newSplitsTailStartIndex..<splits.endIndex])
@@ -243,8 +243,19 @@ struct Expander {
 
         newSplits += newSplitsTail
 
-        return decodedSplits(newSplits)
-    }
+        // make a pass to join any adjacent letter elements
+        var newSplitsCondensed = newSplits
+        // loop from end to beginning so removing from right won't disrupt lower indices
+        for index in (0..<newSplits.count).reversed() {
+            if index > 0
+                && newSplits[index].isNotDigitsAndNotSquareBrackets()
+                && newSplits[index - 1].isNotDigitsAndNotSquareBrackets() {
+                newSplitsCondensed[index - 1] = newSplits[index - 1] + newSplits[index]
+                newSplitsCondensed.remove(at: index)
+            }
+        }
 
+        return decodedSplits(newSplitsCondensed)
+    }
 
 }
