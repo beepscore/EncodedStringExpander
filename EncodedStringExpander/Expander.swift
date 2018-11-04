@@ -10,34 +10,9 @@ import Foundation
 
 struct Expander {
 
-
+    
     //////////////////////////////////////////////////
     /// methods below are public for use by unit tests
-
-    /// Parses an encoded string into sequential expressions
-    /// If encoded contains any pattern "a[", "][", "]d", "]^d" then it has sequential expressions
-    ///
-    /// Examples:
-    ///
-    /// encoded string -> sequential expressions
-    ///
-    ///    "2[ab]" ->  ["2[ab]"]
-    /// "[a]2[bc]" ->  ["[a]", "2[bc]"]
-    /// "2[a][bc]" ->  ["2[a]", "[bc]"]
-    /// - Parameter encoded: the encoded string
-    /// - Returns:  sequential expressions including multipliers. May return empty array []
-    static func sequentialExpressions(_ encoded: String) -> [String] {
-        
-        // insert a separator
-        let separator = ","
-        let encodedWithSeparator = encoded.replacingOccurrences(of: "]", with: "]\(separator)")
-
-        var components =  encodedWithSeparator.components(separatedBy: separator)
-        if components.last == "" {
-            _ = components.popLast()
-        }
-        return components
-    }
 
     static func multiplier(_ encoded: String) -> Int? {
         guard let firstLeftBracketIndex = encoded.firstIndex(of: "[") else { return nil }

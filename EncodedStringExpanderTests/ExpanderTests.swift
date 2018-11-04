@@ -38,22 +38,6 @@ class ExpanderTests: XCTestCase {
                        ["abcddddcddddcddddabcddddcddddcdddd"])
     }
 
-    func testSequentialExpressions() {
-        XCTAssertEqual(Expander.sequentialExpressions("2[ab]"), ["2[ab]"])
-        XCTAssertEqual(Expander.sequentialExpressions("[a]2[bc]"), ["[a]", "2[bc]"])
-        XCTAssertEqual(Expander.sequentialExpressions("2[a][bc]"), ["2[a]", "[bc]"])
-    }
-
-    func testSequentialExpressionsNested() {
-        // FIXME:
-        // Test fails.
-        // sequentialExpressions has a bug
-        // it is going into a nested level instead of staying at top level
-        // May be simpler to change approach, split into a stack and merge.
-        XCTAssertEqual(Expander.sequentialExpressions("[ab]3[[c]4[d]]"),
-                       ["[ab]", "3[[c]4[d]]"])
-    }
-
     func testSplitAtBrackets() {
         XCTAssertEqual(Expander.splitAtBrackets("3[[c]2[d]]"),
                        ["3", "[", "[", "c", "]", "2", "[", "d", "]", "]"])
