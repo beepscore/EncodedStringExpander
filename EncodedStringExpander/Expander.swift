@@ -98,21 +98,14 @@ struct Expander {
         let startIndex = expressionStartIndex(splitsThroughExpressionEnd: Array(splitsThroughExpressionEnd), lastLeftBracketIndex: lastLeftBracketIndex)
 
         // expressionSplits slice uses original indexes from splitsThroughExpressionEnd
-        var expressionSplits = splitsThroughExpressionEnd[startIndex...expressionEndIndex]
+        let expressionSplits = splitsThroughExpressionEnd[startIndex...expressionEndIndex]
         // create a new Array to get index starting at 0
         let expression = Array(expressionSplits)
+
         let currentMultiplier = multiplier(expression: expression)
-
-        var letters = ""
-        let lettersRightCount = 2
-        if expressionSplits.count >= lettersRightCount {
-            let lettersIndex = expressionSplits.index(before: expressionEndIndex)
-            if expressionSplits[lettersIndex].isNotDigitsAndNotSquareBrackets() {
-                letters = expressionSplits[lettersIndex]
-            }
-        }
-
-        let expressionExpanded = String(repeating: letters, count: currentMultiplier)
+        let expressionLetters = letters(expression: expression) ?? ""
+        let expressionExpanded = String(repeating: expressionLetters,
+                                        count: currentMultiplier)
 
         // substitute in encoded
         var newSplits = Array(splits[..<startIndex])
@@ -220,6 +213,42 @@ struct Expander {
         let digitsArray = prefix.components(separatedBy: CharacterSet.decimalDigits.inverted)
         let digitsString = digitsArray.joined()
         return Int(digitsString)
+    }
+
+    static func letters(expression: [String]) -> String? {
+        var letters = ""
+
+        if expression.count == 0 { return nil }
+
+        if expression.count == 1 {
+            let expressionFirst = expression.first ?? ""
+            if expressionFirst.isNotDigitsAndNotSquareBrackets() {
+                return expressionFirst
+            } else {
+                return nil
+            }
+        }
+
+        // number of elements in letters, "]"
+        let lettersRightCount = 2
+        // conditional check is important to avoid potential error in index(before) below.
+        // this conditional is redundant as long as preceeding code checks for 0 and 1.
+        guard expression.count >= lettersRightCount else {
+            return nil
+        }
+
+        // "]" is always the end of an expression
+        guard let expressionEndIndex = expression.firstIndex(of: "]") else {
+            return nil
+        }
+
+        let lettersIndex = expression.index(before: expressionEndIndex)
+
+        if expression[lettersIndex].isNotDigitsAndNotSquareBrackets() {
+            letters = expression[lettersIndex]
+        }
+
+        return letters
     }
 
     // TODO: Consider delete unused method.
