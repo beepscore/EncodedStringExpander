@@ -131,6 +131,7 @@ struct Expander {
         return decodedSplits(newSplitsCondensed)
     }
 
+    // TODO: Consider delete unused method.
     static func multiplier(_ encoded: String) -> Int? {
         guard let firstLeftBracketIndex = encoded.firstIndex(of: "[") else { return nil }
 
@@ -144,6 +145,7 @@ struct Expander {
         return Int(digitsString)
     }
 
+    // TODO: Consider delete unused method.
     static func innerString(_ encoded: String) -> String? {
 
         guard let firstLeftBracketIndex = encoded.firstIndex(of: "[") else {
