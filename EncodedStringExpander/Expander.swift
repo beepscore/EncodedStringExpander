@@ -229,7 +229,6 @@ struct Expander {
         newSplits.append(expressionExpanded)
 
         var newSplitsTail = [String]()
-        //if expressionSplits.endIndex < splits.endIndex - 1 {
         if expressionEndIndex < splits.endIndex {
             // expression ends before end of splits
             let newSplitsTailStartIndex = splits.index(after: expressionEndIndex)
