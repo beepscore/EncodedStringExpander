@@ -175,25 +175,35 @@ struct Expander {
 
         if splits.isEmpty { return "" }
 
-//        // nested level
-//        var level = 0
-//        // each level may have multiple sequential expressions
-//        var levelStrings = [[String]]()
-//        levelStrings.append([])
-//
-//        var itemMinus1 = ""
-//        var itemMinus2 = ""
+        let expanded = decodedSplits(splits)
+        return expanded.joined()
+    }
+
+    static func decodedSplits(_ splits: [String]?) -> [String] {
+
+        // base cases
+        guard let splits = splits else { return [] }
+
+        var isSplitsFullyExpanded = true
+        for element in splits {
+            if !element.isNotDigitsAndNotSquareBrackets() {
+                isSplitsFullyExpanded = false
+                break
+            }
+        }
+        if isSplitsFullyExpanded { return splits }
+
 
         // "]" is always the end of an expression
         guard let expressionEndIndex = splits.firstIndex(of: "]") else {
-            return encoded
+            return splits
         }
 
         let splitsThroughExpressionEnd = splits[...expressionEndIndex]
 
         guard let lastLeftBracketIndex = splitsThroughExpressionEnd.lastIndex(of: "[") else {
             // lastLeftBracketIndex was nil, so encoded is malformed
-            return encoded
+            return splits
         }
 
         var currentMultiplier = 1
@@ -220,21 +230,21 @@ struct Expander {
         let expressionExpanded = String(repeating: letters, count: currentMultiplier)
 
         // substitute in encoded
-        let newSplitsHead = splits[..<expressionStartIndex]
-        // TODO: consider increase efficiency by not joining
-        let newHead = newSplitsHead.joined()
+        // TODO: needs conditional check??
+        var newSplits = Array(splits[..<expressionStartIndex])
+        newSplits.append(expressionExpanded)
 
-        var newTail = ""
+        var newSplitsTail = [String]()
         if expressionSplits.endIndex < splits.endIndex - 1 {
             // expression ends before end of splits
             let newSplitsTailStartIndex = splits.index(after: expressionEndIndex)
-            let newSplitsTail = splits[newSplitsTailStartIndex..<splits.endIndex]
-            newTail = newSplitsTail.joined()
+            newSplitsTail = Array(splits[newSplitsTailStartIndex..<splits.endIndex])
         }
 
-        let newEncoded = newHead + expressionExpanded + newTail
+        newSplits += newSplitsTail
 
-       return decoded2(newEncoded)
+        return decodedSplits(newSplits)
     }
+
 
 }

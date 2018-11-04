@@ -16,6 +16,9 @@ class ExpanderTests: XCTestCase {
         XCTAssertEqual(Expander.decoded("2[a]"), "aa")
         XCTAssertEqual(Expander.decoded("3[ab]"), "ababab")
         XCTAssertEqual(Expander.decoded("2[a][bc]"), "aabc")
+    }
+
+    func testDecodedSeqentialMultipliers() {
         XCTAssertEqual(Expander.decoded("3[ab]4[c]"), "abababcccc")
     }
 
@@ -32,7 +35,6 @@ class ExpanderTests: XCTestCase {
     }
 
     func testDecoded2SeqentialMultipliers() {
-        // FIXME:
         XCTAssertEqual(Expander.decoded2("3[ab]4[c]"), "abababcccc")
     }
 
