@@ -24,6 +24,21 @@ class ExpanderTests: XCTestCase {
         XCTAssertEqual(Expander.decoded("2[1[ab]3[[c]4[d]]]"), "abcddddcddddcddddabcddddcddddcdddd")
     }
 
+    func testDecoded2() {
+        XCTAssertEqual(Expander.decoded2("[ef]"), "ef")
+        XCTAssertEqual(Expander.decoded2("2[a]"), "aa")
+        XCTAssertEqual(Expander.decoded2("3[ab]"), "ababab")
+        XCTAssertEqual(Expander.decoded2("2[a][bc]"), "aabc")
+
+        // FIXME:
+        XCTAssertEqual(Expander.decoded2("3[ab]4[c]"), "abababcccc")
+    }
+
+    func testDecoded2Nested() {
+        // FIXME:
+        XCTAssertEqual(Expander.decoded2("2[1[ab]3[[c]4[d]]]"), "abcddddcddddcddddabcddddcddddcdddd")
+    }
+
     func testSequentialExpressions() {
         XCTAssertEqual(Expander.sequentialExpressions("2[ab]"), ["2[ab]"])
         XCTAssertEqual(Expander.sequentialExpressions("[a]2[bc]"), ["[a]", "2[bc]"])
@@ -44,8 +59,6 @@ class ExpanderTests: XCTestCase {
         XCTAssertEqual(Expander.splitAtBrackets("[ab]3[[c]4[d]]"),
                        ["[", "ab", "]", "3", "[", "[", "c", "]", "4", "[", "d", "]", "]"])
     }
-
-
 
     func testMultiplierNil() {
         XCTAssertNil(Expander.multiplier(""))

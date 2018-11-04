@@ -165,4 +165,76 @@ struct Expander {
         return components
     }
 
+    static func decoded2(_ encoded: String?) -> String {
+
+        // base cases
+        guard let encoded = encoded else { return "" }
+        if encoded.isEmpty { return "" }
+
+        let splits = Expander.splitAtBrackets(encoded)
+
+        if splits.isEmpty { return "" }
+
+//        // nested level
+//        var level = 0
+//        // each level may have multiple sequential expressions
+//        var levelStrings = [[String]]()
+//        levelStrings.append([])
+//
+//        var itemMinus1 = ""
+//        var itemMinus2 = ""
+
+        // "]" is always the end of an expression
+        guard let expressionEndIndex = splits.firstIndex(of: "]") else {
+            return encoded
+        }
+
+        let splitsThroughExpressionEnd = splits[...expressionEndIndex]
+
+        guard let lastLeftBracketIndex = splitsThroughExpressionEnd.lastIndex(of: "[") else {
+            // lastLeftBracketIndex was nil, so encoded is malformed
+            return encoded
+        }
+
+        var currentMultiplier = 1
+        var expressionStartIndex = lastLeftBracketIndex
+        let multiplierLeftLettersRightCount = 4
+        if splitsThroughExpressionEnd.count >= multiplierLeftLettersRightCount
+            && splitsThroughExpressionEnd[lastLeftBracketIndex - 1].isDigits() {
+            expressionStartIndex = lastLeftBracketIndex - 1
+            currentMultiplier = Int(splitsThroughExpressionEnd[expressionStartIndex]) ?? 1
+        }
+
+        // expressionSplits slice uses original indexes
+        var expressionSplits = splitsThroughExpressionEnd[expressionStartIndex...expressionEndIndex]
+
+        var letters = ""
+        let lettersRightCount = 2
+        if expressionSplits.count >= lettersRightCount {
+            let lettersIndex = expressionSplits.index(before: expressionEndIndex)
+            if expressionSplits[lettersIndex].isNotDigitsAndNotSquareBrackets() {
+                letters = expressionSplits[lettersIndex]
+            }
+        }
+
+        let expressionExpanded = String(repeating: letters, count: currentMultiplier)
+
+        // substitute in encoded
+        let newSplitsHead = splits[..<expressionStartIndex]
+        // TODO: consider increase efficiency by not joining
+        let newHead = newSplitsHead.joined()
+
+        var newTail = ""
+        if expressionSplits.endIndex < splits.endIndex - 1 {
+            // expression ends before end of splits
+            let newSplitsTailStartIndex = splits.index(after: expressionEndIndex)
+            let newSplitsTail = splits[newSplitsTailStartIndex..<splits.endIndex]
+            newTail = newSplitsTail.joined()
+        }
+
+        let newEncoded = newHead + expressionExpanded + newTail
+
+       return decoded2(newEncoded)
+    }
+
 }
