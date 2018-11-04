@@ -141,19 +141,28 @@ struct Expander {
 
         newSplits += newSplitsTail
 
+        let splitsCondensed = Expander.condensedSplits(newSplits)
+
+        return decodedSplits(splitsCondensed)
+    }
+
+    // TODO: Consider may be able to increase efficiency by only processing last 2 elements
+    /// - Parameter splits: array from splitting encoded at each bracket "[" or "]"
+    ///   splits may have been processed to have adjacent elements that are alpha
+    /// - Returns: array by joining any adjacent elements that are alpha
+    static func condensedSplits(_ splits: [String]) -> [String] {
         // make a pass to join any adjacent letter elements
-        var newSplitsCondensed = newSplits
+        var splitsCondensed = splits
         // loop from end to beginning so removing from right won't disrupt lower indices
-        for index in (0..<newSplits.count).reversed() {
+        for index in (0..<splits.count).reversed() {
             if index > 0
-                && newSplits[index].isNotDigitsAndNotSquareBrackets()
-                && newSplits[index - 1].isNotDigitsAndNotSquareBrackets() {
-                newSplitsCondensed[index - 1] = newSplits[index - 1] + newSplits[index]
-                newSplitsCondensed.remove(at: index)
+                && splits[index].isNotDigitsAndNotSquareBrackets()
+                && splits[index - 1].isNotDigitsAndNotSquareBrackets() {
+                splitsCondensed[index - 1] = splits[index - 1] + splits[index]
+                splitsCondensed.remove(at: index)
             }
         }
-
-        return decodedSplits(newSplitsCondensed)
+        return splitsCondensed
     }
 
     // TODO: Consider delete unused method.
