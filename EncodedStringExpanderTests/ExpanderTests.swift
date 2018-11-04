@@ -28,6 +28,14 @@ class ExpanderTests: XCTestCase {
         XCTAssertEqual(Expander.decoded("2[1[ab]3[[c]4[d]]]"), "abcddddcddddcddddabcddddcddddcdddd")
     }
 
+    func testSplitAtBrackets() {
+        XCTAssertEqual(Expander.splitAtBrackets("3[[c]2[d]]"),
+                       ["3", "[", "[", "c", "]", "2", "[", "d", "]", "]"])
+
+        XCTAssertEqual(Expander.splitAtBrackets("[ab]3[[c]4[d]]"),
+                       ["[", "ab", "]", "3", "[", "[", "c", "]", "4", "[", "d", "]", "]"])
+    }
+
     func testDecodedSplits() {
         var splits = ["3", "[", "[", "c", "]", "2", "[", "d", "]", "]"]
         XCTAssertEqual(Expander.decodedSplits(splits),
@@ -36,14 +44,6 @@ class ExpanderTests: XCTestCase {
         splits = Expander.splitAtBrackets("2[1[ab]3[[c]4[d]]]")
         XCTAssertEqual(Expander.decodedSplits(splits),
                        ["abcddddcddddcddddabcddddcddddcdddd"])
-    }
-
-    func testSplitAtBrackets() {
-        XCTAssertEqual(Expander.splitAtBrackets("3[[c]2[d]]"),
-                       ["3", "[", "[", "c", "]", "2", "[", "d", "]", "]"])
-
-        XCTAssertEqual(Expander.splitAtBrackets("[ab]3[[c]4[d]]"),
-                       ["[", "ab", "]", "3", "[", "[", "c", "]", "4", "[", "d", "]", "]"])
     }
 
     func testMultiplierNil() {
