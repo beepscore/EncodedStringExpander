@@ -86,9 +86,7 @@ struct Expander {
         if isSplitsFullyExpanded(splits) { return splits }
 
         // "]" is always the end of an expression
-        guard let expressionEndIndex = splits.firstIndex(of: "]") else {
-            return splits
-        }
+        guard let expressionEndIndex = splits.firstIndex(of: "]") else { return splits }
 
         let splitsThroughExpressionEnd = splits[...expressionEndIndex]
 
