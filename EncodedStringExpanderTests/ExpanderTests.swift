@@ -94,15 +94,15 @@ class ExpanderTests: XCTestCase {
         XCTAssertEqual(Expander.letters(expression: expression), "ab")
     }
 
-    func testCondensedSplits() {
+    func testSplitsByJoiningAdjacentLetters() {
         var splits = [String]()
-        XCTAssertEqual(Expander.condensedSplits(splits), [])
+        XCTAssertEqual(Expander.splitsByJoiningAdjacentLetters(splits), [])
 
         splits = ["abc", "def"]
-        XCTAssertEqual(Expander.condensedSplits(splits), ["abcdef"])
+        XCTAssertEqual(Expander.splitsByJoiningAdjacentLetters(splits), ["abcdef"])
 
         splits = ["ab", "3", "[", "c", "dddd", "]"]
-        XCTAssertEqual(Expander.condensedSplits(splits),
+        XCTAssertEqual(Expander.splitsByJoiningAdjacentLetters(splits),
                        ["ab", "3", "[", "cdddd", "]"])
     }
 

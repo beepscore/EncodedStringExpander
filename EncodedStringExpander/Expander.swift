@@ -110,14 +110,15 @@ struct Expander {
                                                     expressionEndIndex: expressionEndIndex,
                                                     expressionExpanded: expressionExpanded)
 
-        let splitsCondensed = condensedSplits(newSplits)
+        let splitsAdjacentLettersJoined = splitsByJoiningAdjacentLetters(newSplits)
 
-        return decodedSplits(splitsCondensed)
+        return decodedSplits(splitsAdjacentLettersJoined)
     }
 
     /// - Parameter splits: array originally from splitting encoded at each bracket "[" or "]"
     ///   splits may have been processed to alter elements
-    /// - Returns: true if every element is "letters", i.e. not digits and not a square bracket
+    /// - Returns: true if every element is "letters"
+    ///   i.e. not digits and not a square bracket
     static func isSplitsFullyExpanded(_ splits: [String]) -> Bool {
 
         var isFullyExpanded = true
@@ -237,8 +238,9 @@ struct Expander {
     // TODO: Consider may be able to increase efficiency by only processing last 2 elements
     /// - Parameter splits: array originally from splitting encoded at each bracket "[" or "]"
     ///   splits may have been processed to alter elements
-    /// - Returns: array by joining any adjacent elements that are alpha
-    static func condensedSplits(_ splits: [String]) -> [String] {
+    /// - Returns: array by joining any adjacent elements that are "letters"
+    ///   i.e. not digits and not a square bracket
+    static func splitsByJoiningAdjacentLetters(_ splits: [String]) -> [String] {
         // make a pass to join any adjacent letter elements
         var splitsCondensed = splits
         // loop from end to beginning so removing from right won't disrupt lower indices
