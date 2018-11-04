@@ -76,6 +76,11 @@ struct Expander {
     }
     
     // TODO: Consider change to a method that acts more like a hand held calculator stack.
+    /// May recursively call itself
+    /// - Parameter splits: array originally from splitting encoded string
+    ///   at each bracket "[" or "]".
+    ///   splits may have been processed to alter elements
+    /// - Returns: array of partially or completely decoded and expanded splits.
     static func decodedSplits(_ splits: [String]?) -> [String] {
 
         // base cases
