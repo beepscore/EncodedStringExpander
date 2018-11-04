@@ -53,69 +53,6 @@ struct Expander {
     //////////////////////////////////////////////////
     /// methods below are public for use by unit tests
 
-    static func multiplier(_ encoded: String) -> Int? {
-        guard let firstLeftBracketIndex = encoded.firstIndex(of: "[") else { return nil }
-
-        let prefix = String(encoded[..<firstLeftBracketIndex])
-
-        // remove non digit characters
-        // alternatively could use .filter and scalar view, might not be as robust
-        // https://stackoverflow.com/questions/36594179/remove-all-non-numeric-characters-from-a-string-in-swift#36607684
-        let digitsArray = prefix.components(separatedBy: CharacterSet.decimalDigits.inverted)
-        let digitsString = digitsArray.joined()
-        return Int(digitsString)
-    }
-
-    static func innerString(_ encoded: String) -> String? {
-
-        guard let firstLeftBracketIndex = encoded.firstIndex(of: "[") else {
-            // assume string isn't malformed, doesn't have a right bracket "]" either
-            return encoded
-        }
-
-        let innerStart = encoded.index(after: firstLeftBracketIndex)
-
-        guard let lastRightBracketIndex = encoded.lastIndex(of: "]") else {
-            // firstLeftBracketIndex was nil, so encoded is malformed
-            return nil
-        }
-
-        guard encoded.count >= 2 else {
-            // string is too short to get index before lastRightBracketIndex
-            return nil
-        }
-
-        let innerEnd = encoded.index(before: lastRightBracketIndex)
-
-        // don't remove digits, they may be needed for nested substrings
-        let innerString = String(encoded[innerStart...innerEnd])
-
-        return innerString
-    }
-
-    //////////////
-    /// - Parameter encoded: encoded string
-    /// - Returns: an array from splitting encoded at each bracket "[" or "]"
-    static func splitAtBrackets(_ encoded: String?) -> [String] {
-
-        // base cases
-        guard let encoded = encoded else { return [] }
-        if encoded.isEmpty { return [] }
-
-        // insert a separator
-        let separator = ","
-        var encodedWithSeparator = encoded
-            .replacingOccurrences(of: "]", with: "\(separator)]\(separator)")
-        encodedWithSeparator = encodedWithSeparator
-            .replacingOccurrences(of: "[", with: "\(separator)[\(separator)")
-
-        var components =  encodedWithSeparator.components(separatedBy: separator)
-
-        // remove any empty strings
-        components = components.filter {!$0.isEmpty}
-        return components
-    }
-
     static func decodedSplits(_ splits: [String]?) -> [String] {
 
         // base cases
@@ -193,6 +130,69 @@ struct Expander {
         }
 
         return decodedSplits(newSplitsCondensed)
+    }
+
+    static func multiplier(_ encoded: String) -> Int? {
+        guard let firstLeftBracketIndex = encoded.firstIndex(of: "[") else { return nil }
+
+        let prefix = String(encoded[..<firstLeftBracketIndex])
+
+        // remove non digit characters
+        // alternatively could use .filter and scalar view, might not be as robust
+        // https://stackoverflow.com/questions/36594179/remove-all-non-numeric-characters-from-a-string-in-swift#36607684
+        let digitsArray = prefix.components(separatedBy: CharacterSet.decimalDigits.inverted)
+        let digitsString = digitsArray.joined()
+        return Int(digitsString)
+    }
+
+    static func innerString(_ encoded: String) -> String? {
+
+        guard let firstLeftBracketIndex = encoded.firstIndex(of: "[") else {
+            // assume string isn't malformed, doesn't have a right bracket "]" either
+            return encoded
+        }
+
+        let innerStart = encoded.index(after: firstLeftBracketIndex)
+
+        guard let lastRightBracketIndex = encoded.lastIndex(of: "]") else {
+            // firstLeftBracketIndex was nil, so encoded is malformed
+            return nil
+        }
+
+        guard encoded.count >= 2 else {
+            // string is too short to get index before lastRightBracketIndex
+            return nil
+        }
+
+        let innerEnd = encoded.index(before: lastRightBracketIndex)
+
+        // don't remove digits, they may be needed for nested substrings
+        let innerString = String(encoded[innerStart...innerEnd])
+
+        return innerString
+    }
+
+    //////////////
+    /// - Parameter encoded: encoded string
+    /// - Returns: an array from splitting encoded at each bracket "[" or "]"
+    static func splitAtBrackets(_ encoded: String?) -> [String] {
+
+        // base cases
+        guard let encoded = encoded else { return [] }
+        if encoded.isEmpty { return [] }
+
+        // insert a separator
+        let separator = ","
+        var encodedWithSeparator = encoded
+            .replacingOccurrences(of: "]", with: "\(separator)]\(separator)")
+        encodedWithSeparator = encodedWithSeparator
+            .replacingOccurrences(of: "[", with: "\(separator)[\(separator)")
+
+        var components =  encodedWithSeparator.components(separatedBy: separator)
+
+        // remove any empty strings
+        components = components.filter {!$0.isEmpty}
+        return components
     }
 
 }
