@@ -199,20 +199,6 @@ struct Expander {
         return currentMultiplier
     }
 
-    // TODO: Consider delete unused method.
-    static func multiplier(_ encoded: String) -> Int? {
-        guard let firstLeftBracketIndex = encoded.firstIndex(of: "[") else { return nil }
-
-        let prefix = String(encoded[..<firstLeftBracketIndex])
-
-        // remove non digit characters
-        // alternatively could use .filter and scalar view, might not be as robust
-        // https://stackoverflow.com/questions/36594179/remove-all-non-numeric-characters-from-a-string-in-swift#36607684
-        let digitsArray = prefix.components(separatedBy: CharacterSet.decimalDigits.inverted)
-        let digitsString = digitsArray.joined()
-        return Int(digitsString)
-    }
-
     static func letters(expression: [String]) -> String? {
         var letters = ""
 
