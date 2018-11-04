@@ -11,21 +11,21 @@ import XCTest
 
 class ExpanderTests: XCTestCase {
 
-    func testDecoded2() {
-        XCTAssertEqual(Expander.decoded2("[ef]"), "ef")
-        XCTAssertEqual(Expander.decoded2("2[a]"), "aa")
-        XCTAssertEqual(Expander.decoded2("3[ab]"), "ababab")
-        XCTAssertEqual(Expander.decoded2("2[a][bc]"), "aabc")
+    func testDecoded() {
+        XCTAssertEqual(Expander.decoded("[ef]"), "ef")
+        XCTAssertEqual(Expander.decoded("2[a]"), "aa")
+        XCTAssertEqual(Expander.decoded("3[ab]"), "ababab")
+        XCTAssertEqual(Expander.decoded("2[a][bc]"), "aabc")
     }
 
-    func testDecoded2SeqentialMultipliers() {
-        XCTAssertEqual(Expander.decoded2("3[ab]4[c]"), "abababcccc")
+    func testDecodedSeqentialMultipliers() {
+        XCTAssertEqual(Expander.decoded("3[ab]4[c]"), "abababcccc")
     }
 
-    func testDecoded2Nested() {
-        XCTAssertEqual(Expander.decoded2("3[[c]2[d]]"), "cddcddcdd")
+    func testDecodedNested() {
+        XCTAssertEqual(Expander.decoded("3[[c]2[d]]"), "cddcddcdd")
 
-        XCTAssertEqual(Expander.decoded2("2[1[ab]3[[c]4[d]]]"), "abcddddcddddcddddabcddddcddddcdddd")
+        XCTAssertEqual(Expander.decoded("2[1[ab]3[[c]4[d]]]"), "abcddddcddddcddddabcddddcddddcdddd")
     }
 
     func testDecodedSplits() {

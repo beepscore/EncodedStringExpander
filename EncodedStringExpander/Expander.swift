@@ -36,7 +36,7 @@ struct Expander {
     ///   The substring to be expanded does not contain decimal digits.
     ///   The string may be nested.
     /// - Returns: expanded string
-    static func decoded2(_ encoded: String?) -> String {
+    static func decoded(_ encoded: String?) -> String {
 
         // base cases
         guard let encoded = encoded else { return "" }
@@ -49,7 +49,7 @@ struct Expander {
         let expanded = decodedSplits(splits)
         return expanded.joined()
     }
-    
+
     //////////////////////////////////////////////////
     /// methods below are public for use by unit tests
 
