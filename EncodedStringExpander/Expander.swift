@@ -53,6 +53,28 @@ struct Expander {
     //////////////////////////////////////////////////
     /// methods below are public for use by unit tests
 
+    /// - Parameter encoded: encoded string
+    /// - Returns: an array from splitting encoded at each bracket "[" or "]"
+    static func splitAtBrackets(_ encoded: String?) -> [String] {
+
+        // base cases
+        guard let encoded = encoded else { return [] }
+        if encoded.isEmpty { return [] }
+
+        // insert a separator
+        let separator = ","
+        var encodedWithSeparator = encoded
+            .replacingOccurrences(of: "]", with: "\(separator)]\(separator)")
+        encodedWithSeparator = encodedWithSeparator
+            .replacingOccurrences(of: "[", with: "\(separator)[\(separator)")
+
+        var components =  encodedWithSeparator.components(separatedBy: separator)
+
+        // remove any empty strings
+        components = components.filter {!$0.isEmpty}
+        return components
+    }
+    
     // TODO: Consider change to a method that acts more like a hand held calculator stack.
     // TODO: Consider shorten method by extracting code or using methods
     // similar to multiplier and innerString
@@ -132,28 +154,6 @@ struct Expander {
         }
 
         return decodedSplits(newSplitsCondensed)
-    }
-
-    /// - Parameter encoded: encoded string
-    /// - Returns: an array from splitting encoded at each bracket "[" or "]"
-    static func splitAtBrackets(_ encoded: String?) -> [String] {
-
-        // base cases
-        guard let encoded = encoded else { return [] }
-        if encoded.isEmpty { return [] }
-
-        // insert a separator
-        let separator = ","
-        var encodedWithSeparator = encoded
-            .replacingOccurrences(of: "]", with: "\(separator)]\(separator)")
-        encodedWithSeparator = encodedWithSeparator
-            .replacingOccurrences(of: "[", with: "\(separator)[\(separator)")
-
-        var components =  encodedWithSeparator.components(separatedBy: separator)
-
-        // remove any empty strings
-        components = components.filter {!$0.isEmpty}
-        return components
     }
 
     // TODO: Consider delete unused method.
