@@ -105,19 +105,10 @@ struct Expander {
         let expressionExpanded = String(repeating: expressionLetters,
                                         count: currentMultiplier)
 
-        // substitute in encoded
-        var newSplits = Array(splits[..<startIndex])
-        newSplits.append(expressionExpanded)
-
-        var newSplitsTail = [String]()
-        //if expressionSplits.endIndex < splits.endIndex - 1 {
-        if expressionSplits.endIndex < splits.endIndex {
-            // expression ends before end of splits
-            let newSplitsTailStartIndex = splits.index(after: expressionEndIndex)
-            newSplitsTail = Array(splits[newSplitsTailStartIndex..<splits.endIndex])
-        }
-
-        newSplits += newSplitsTail
+        let newSplits = splitsByExpandingExpression(splits: splits,
+                                                    expressionStartIndex: startIndex,
+                                                    expressionEndIndex: expressionEndIndex,
+                                                    expressionExpanded: expressionExpanded)
 
         let splitsCondensed = condensedSplits(newSplits)
 
@@ -236,6 +227,30 @@ struct Expander {
         }
 
         return letters
+    }
+
+    /// - Parameter splits: array originally from splitting encoded at each bracket "[" or "]"
+    ///   splits may have been processed to alter elements
+    /// - Returns: array by replacing elements from expressionStartIndex to expressionEndIndex with one element expressionExpanded
+    static func splitsByExpandingExpression(splits: [String],
+                                            expressionStartIndex: Int,
+                                            expressionEndIndex: Int,
+                                            expressionExpanded: String) -> [String] {
+
+        // substitute in encoded
+        var newSplits = Array(splits[..<expressionStartIndex])
+        newSplits.append(expressionExpanded)
+
+        var newSplitsTail = [String]()
+        //if expressionSplits.endIndex < splits.endIndex - 1 {
+        if expressionEndIndex < splits.endIndex {
+            // expression ends before end of splits
+            let newSplitsTailStartIndex = splits.index(after: expressionEndIndex)
+            newSplitsTail = Array(splits[newSplitsTailStartIndex..<splits.endIndex])
+        }
+
+        newSplits += newSplitsTail
+        return newSplits
     }
 
 }
