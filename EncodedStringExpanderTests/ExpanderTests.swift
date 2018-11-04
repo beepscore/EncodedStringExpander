@@ -104,10 +104,4 @@ class ExpanderTests: XCTestCase {
         XCTAssertNil(Expander.multiplier("[5]"))
     }
 
-    func testInnerString() {
-        XCTAssertEqual(Expander.innerString("2[a]"), "a")
-        XCTAssertEqual(Expander.innerString("3[ab]"), "ab")
-        XCTAssertEqual(Expander.innerString("3[[ab]4[c]]"), "[ab]4[c]")
-    }
-
 }

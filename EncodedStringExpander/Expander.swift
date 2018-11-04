@@ -249,32 +249,4 @@ struct Expander {
         return letters
     }
 
-    // TODO: Consider delete unused method.
-    static func innerString(_ encoded: String) -> String? {
-
-        guard let firstLeftBracketIndex = encoded.firstIndex(of: "[") else {
-            // assume string isn't malformed, doesn't have a right bracket "]" either
-            return encoded
-        }
-
-        let innerStart = encoded.index(after: firstLeftBracketIndex)
-
-        guard let lastRightBracketIndex = encoded.lastIndex(of: "]") else {
-            // firstLeftBracketIndex was nil, so encoded is malformed
-            return nil
-        }
-
-        guard encoded.count >= 2 else {
-            // string is too short to get index before lastRightBracketIndex
-            return nil
-        }
-
-        let innerEnd = encoded.index(before: lastRightBracketIndex)
-
-        // don't remove digits, they may be needed for nested substrings
-        let innerString = String(encoded[innerStart...innerEnd])
-
-        return innerString
-    }
-
 }
