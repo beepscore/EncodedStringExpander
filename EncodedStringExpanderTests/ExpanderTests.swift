@@ -46,6 +46,18 @@ class ExpanderTests: XCTestCase {
                        ["abcddddcddddcddddabcddddcddddcdddd"])
     }
 
+    func testCondensedSplits() {
+        var splits = [String]()
+        XCTAssertEqual(Expander.condensedSplits(splits), [])
+
+        splits = ["abc", "def"]
+        XCTAssertEqual(Expander.condensedSplits(splits), ["abcdef"])
+
+        splits = ["ab", "3", "[", "c", "dddd", "]"]
+        XCTAssertEqual(Expander.condensedSplits(splits),
+                       ["ab", "3", "[", "cdddd", "]"])
+    }
+
     func testMultiplierNil() {
         XCTAssertNil(Expander.multiplier(""))
         XCTAssertNil(Expander.multiplier("[a]"))
