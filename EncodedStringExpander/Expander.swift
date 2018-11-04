@@ -10,6 +10,45 @@ import Foundation
 
 struct Expander {
 
+    /// Expands an encoded string of one or more sequential and/or nested expressions.
+    ///
+    /// Examples:
+    ///
+    /// encoded string -> decoded string
+    ///
+    ///  "2[ab]" -> "abab"
+    ///
+    /// "3[[a]2[bc]]" -> "abcbcabcbcabcbc"
+    ///
+    ///  If multiplier prefix is absent use 1 as the implicit default.
+    ///
+    ///  "[ef]" -> "ef"
+    ///
+    ///  The multiplier distributes only over immediatedly following substring
+    ///
+    ///  "2[a][bc]" -> "aabc"
+    ///
+    /// Assumes the encoded string is not malformed.
+    ///
+    /// - Parameter encoded: the encoded string
+    ///   May contain a multiplier prefix before a bracket [] delimited inner string
+    ///   The multiplier contains decimal digits.
+    ///   The substring to be expanded does not contain decimal digits.
+    ///   The string may be nested.
+    /// - Returns: expanded string
+    static func decoded2(_ encoded: String?) -> String {
+
+        // base cases
+        guard let encoded = encoded else { return "" }
+        if encoded.isEmpty { return "" }
+
+        let splits = Expander.splitAtBrackets(encoded)
+
+        if splits.isEmpty { return "" }
+
+        let expanded = decodedSplits(splits)
+        return expanded.joined()
+    }
     
     //////////////////////////////////////////////////
     /// methods below are public for use by unit tests
@@ -75,46 +114,6 @@ struct Expander {
         // remove any empty strings
         components = components.filter {!$0.isEmpty}
         return components
-    }
-
-    /// Expands an encoded string of one or more sequential and/or nested expressions.
-    ///
-    /// Examples:
-    ///
-    /// encoded string -> decoded string
-    ///
-    ///  "2[ab]" -> "abab"
-    ///
-    /// "3[[a]2[bc]]" -> "abcbcabcbcabcbc"
-    ///
-    ///  If multiplier prefix is absent use 1 as the implicit default.
-    ///
-    ///  "[ef]" -> "ef"
-    ///
-    ///  The multiplier distributes only over immediatedly following substring
-    ///
-    ///  "2[a][bc]" -> "aabc"
-    ///
-    /// Assumes the encoded string is not malformed.
-    ///
-    /// - Parameter encoded: the encoded string
-    ///   May contain a multiplier prefix before a bracket [] delimited inner string
-    ///   The multiplier contains decimal digits.
-    ///   The substring to be expanded does not contain decimal digits.
-    ///   The string may be nested.
-    /// - Returns: expanded string
-    static func decoded2(_ encoded: String?) -> String {
-
-        // base cases
-        guard let encoded = encoded else { return "" }
-        if encoded.isEmpty { return "" }
-
-        let splits = Expander.splitAtBrackets(encoded)
-
-        if splits.isEmpty { return "" }
-
-        let expanded = decodedSplits(splits)
-        return expanded.joined()
     }
 
     static func decodedSplits(_ splits: [String]?) -> [String] {
