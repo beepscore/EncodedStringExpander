@@ -103,7 +103,6 @@ struct Expander {
         let expressionExpanded = String(repeating: letters, count: currentMultiplier)
 
         // substitute in encoded
-        // TODO: needs conditional check??
         var newSplits = Array(splits[..<expressionStartIndex])
         newSplits.append(expressionExpanded)
 
