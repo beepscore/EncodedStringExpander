@@ -131,6 +131,28 @@ struct Expander {
         return decodedSplits(newSplitsCondensed)
     }
 
+    /// - Parameter encoded: encoded string
+    /// - Returns: an array from splitting encoded at each bracket "[" or "]"
+    static func splitAtBrackets(_ encoded: String?) -> [String] {
+
+        // base cases
+        guard let encoded = encoded else { return [] }
+        if encoded.isEmpty { return [] }
+
+        // insert a separator
+        let separator = ","
+        var encodedWithSeparator = encoded
+            .replacingOccurrences(of: "]", with: "\(separator)]\(separator)")
+        encodedWithSeparator = encodedWithSeparator
+            .replacingOccurrences(of: "[", with: "\(separator)[\(separator)")
+
+        var components =  encodedWithSeparator.components(separatedBy: separator)
+
+        // remove any empty strings
+        components = components.filter {!$0.isEmpty}
+        return components
+    }
+
     // TODO: Consider delete unused method.
     static func multiplier(_ encoded: String) -> Int? {
         guard let firstLeftBracketIndex = encoded.firstIndex(of: "[") else { return nil }
@@ -171,29 +193,6 @@ struct Expander {
         let innerString = String(encoded[innerStart...innerEnd])
 
         return innerString
-    }
-
-    //////////////
-    /// - Parameter encoded: encoded string
-    /// - Returns: an array from splitting encoded at each bracket "[" or "]"
-    static func splitAtBrackets(_ encoded: String?) -> [String] {
-
-        // base cases
-        guard let encoded = encoded else { return [] }
-        if encoded.isEmpty { return [] }
-
-        // insert a separator
-        let separator = ","
-        var encodedWithSeparator = encoded
-            .replacingOccurrences(of: "]", with: "\(separator)]\(separator)")
-        encodedWithSeparator = encodedWithSeparator
-            .replacingOccurrences(of: "[", with: "\(separator)[\(separator)")
-
-        var components =  encodedWithSeparator.components(separatedBy: separator)
-
-        // remove any empty strings
-        components = components.filter {!$0.isEmpty}
-        return components
     }
 
 }
