@@ -13,6 +13,8 @@
 		DE379886218CB2880085E0C8 /* EncodedStringExpander.h in Headers */ = {isa = PBXBuildFile; fileRef = DE379878218CB2880085E0C8 /* EncodedStringExpander.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DE3ADD14218CB45200A7A460 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DE3ADD13218CB45100A7A460 /* LICENSE */; };
 		DE3ADD16218CB45F00A7A460 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DE3ADD15218CB45F00A7A460 /* README.md */; };
+		DEB7EF1A218E6ABA00816C88 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB7EF19218E6ABA00816C88 /* StringExtensions.swift */; };
+		DEB7EF1C218E74D000816C88 /* StringExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB7EF1B218E74D000816C88 /* StringExtensionsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 		DE379885218CB2880085E0C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE3ADD13218CB45100A7A460 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		DE3ADD15218CB45F00A7A460 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		DEB7EF19218E6ABA00816C88 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		DEB7EF1B218E74D000816C88 /* StringExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,7 @@
 				DE379878218CB2880085E0C8 /* EncodedStringExpander.h */,
 				DE32C386218CB7C8005A259A /* Expander.swift */,
 				DE379879218CB2880085E0C8 /* Info.plist */,
+				DEB7EF19218E6ABA00816C88 /* StringExtensions.swift */,
 			);
 			path = EncodedStringExpander;
 			sourceTree = "<group>";
@@ -93,6 +98,7 @@
 				DE32C388218CB7E0005A259A /* EncodedStringExpanderTests-Bridging-Header.h */,
 				DE32C389218CB7E0005A259A /* ExpanderTests.swift */,
 				DE379885218CB2880085E0C8 /* Info.plist */,
+				DEB7EF1B218E74D000816C88 /* StringExtensionsTests.swift */,
 			);
 			path = EncodedStringExpanderTests;
 			sourceTree = "<group>";
@@ -209,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEB7EF1A218E6ABA00816C88 /* StringExtensions.swift in Sources */,
 				DE32C387218CB7C8005A259A /* Expander.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,6 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEB7EF1C218E74D000816C88 /* StringExtensionsTests.swift in Sources */,
 				DE32C38A218CB7E0005A259A /* ExpanderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
