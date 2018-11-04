@@ -76,8 +76,6 @@ struct Expander {
     }
     
     // TODO: Consider change to a method that acts more like a hand held calculator stack.
-    // TODO: Consider shorten method by extracting code or using methods
-    // similar to multiplier and innerString
     static func decodedSplits(_ splits: [String]?) -> [String] {
 
         // base cases
