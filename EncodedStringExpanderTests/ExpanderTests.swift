@@ -65,18 +65,6 @@ class ExpanderTests: XCTestCase {
         XCTAssertFalse(Expander.isSplitsFullyExpanded(splits))
     }
 
-    func testCondensedSplits() {
-        var splits = [String]()
-        XCTAssertEqual(Expander.condensedSplits(splits), [])
-
-        splits = ["abc", "def"]
-        XCTAssertEqual(Expander.condensedSplits(splits), ["abcdef"])
-
-        splits = ["ab", "3", "[", "c", "dddd", "]"]
-        XCTAssertEqual(Expander.condensedSplits(splits),
-                       ["ab", "3", "[", "cdddd", "]"])
-    }
-
     func testMultiplierExpression() {
         XCTAssertEqual(Expander.multiplier(expression: [""]), 1)
         XCTAssertEqual(Expander.multiplier(expression: ["2", "[", "a", "]"]), 2)
@@ -104,6 +92,18 @@ class ExpanderTests: XCTestCase {
     func testLettersExpressionTooLong() {
         let expression = ["3", "[", "[", "ab", "]", "4", "[", "c", "]", "]"]
         XCTAssertEqual(Expander.letters(expression: expression), "ab")
+    }
+
+    func testCondensedSplits() {
+        var splits = [String]()
+        XCTAssertEqual(Expander.condensedSplits(splits), [])
+
+        splits = ["abc", "def"]
+        XCTAssertEqual(Expander.condensedSplits(splits), ["abcdef"])
+
+        splits = ["ab", "3", "[", "c", "dddd", "]"]
+        XCTAssertEqual(Expander.condensedSplits(splits),
+                       ["ab", "3", "[", "cdddd", "]"])
     }
 
 }

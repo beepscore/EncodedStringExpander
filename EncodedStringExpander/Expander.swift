@@ -130,25 +130,6 @@ struct Expander {
         return isFullyExpanded
     }
 
-    // TODO: Consider may be able to increase efficiency by only processing last 2 elements
-    /// - Parameter splits: array originally from splitting encoded at each bracket "[" or "]"
-    ///   splits may have been processed to alter elements
-    /// - Returns: array by joining any adjacent elements that are alpha
-    static func condensedSplits(_ splits: [String]) -> [String] {
-        // make a pass to join any adjacent letter elements
-        var splitsCondensed = splits
-        // loop from end to beginning so removing from right won't disrupt lower indices
-        for index in (0..<splits.count).reversed() {
-            if index > 0
-                && splits[index].isNotDigitsAndNotSquareBrackets()
-                && splits[index - 1].isNotDigitsAndNotSquareBrackets() {
-                splitsCondensed[index - 1] = splits[index - 1] + splits[index]
-                splitsCondensed.remove(at: index)
-            }
-        }
-        return splitsCondensed
-    }
-
     /// - Parameters:
     ///   - splitsThroughExpressionEnd:
     ///   - lastLeftBracketIndex: index of last left bracket "[" in splitsThroughExpressionEnd
@@ -251,6 +232,25 @@ struct Expander {
 
         newSplits += newSplitsTail
         return newSplits
+    }
+
+    // TODO: Consider may be able to increase efficiency by only processing last 2 elements
+    /// - Parameter splits: array originally from splitting encoded at each bracket "[" or "]"
+    ///   splits may have been processed to alter elements
+    /// - Returns: array by joining any adjacent elements that are alpha
+    static func condensedSplits(_ splits: [String]) -> [String] {
+        // make a pass to join any adjacent letter elements
+        var splitsCondensed = splits
+        // loop from end to beginning so removing from right won't disrupt lower indices
+        for index in (0..<splits.count).reversed() {
+            if index > 0
+                && splits[index].isNotDigitsAndNotSquareBrackets()
+                && splits[index - 1].isNotDigitsAndNotSquareBrackets() {
+                splitsCondensed[index - 1] = splits[index - 1] + splits[index]
+                splitsCondensed.remove(at: index)
+            }
+        }
+        return splitsCondensed
     }
 
 }
