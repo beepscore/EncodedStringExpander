@@ -97,17 +97,13 @@ struct Expander {
             return splits
         }
 
-        var currentMultiplier = 1
-        var expressionStartIndex = lastLeftBracketIndex
-        let multiplierLeftLettersRightCount = 4
-        if splitsThroughExpressionEnd.count >= multiplierLeftLettersRightCount
-            && splitsThroughExpressionEnd[lastLeftBracketIndex - 1].isDigits() {
-            expressionStartIndex = lastLeftBracketIndex - 1
-            currentMultiplier = Int(splitsThroughExpressionEnd[expressionStartIndex]) ?? 1
-        }
+        let startIndex = expressionStartIndex(splitsThroughExpressionEnd: Array(splitsThroughExpressionEnd), lastLeftBracketIndex: lastLeftBracketIndex)
 
-        // expressionSplits slice uses original indexes
-        var expressionSplits = splitsThroughExpressionEnd[expressionStartIndex...expressionEndIndex]
+        // expressionSplits slice uses original indexes from splitsThroughExpressionEnd
+        var expressionSplits = splitsThroughExpressionEnd[startIndex...expressionEndIndex]
+        // create a new Array to get index starting at 0
+        let expression = Array(expressionSplits)
+        let currentMultiplier = multiplier(expression: expression)
 
         var letters = ""
         let lettersRightCount = 2
@@ -121,7 +117,7 @@ struct Expander {
         let expressionExpanded = String(repeating: letters, count: currentMultiplier)
 
         // substitute in encoded
-        var newSplits = Array(splits[..<expressionStartIndex])
+        var newSplits = Array(splits[..<startIndex])
         newSplits.append(expressionExpanded)
 
         var newSplitsTail = [String]()
@@ -171,6 +167,47 @@ struct Expander {
             }
         }
         return splitsCondensed
+    }
+
+    /// - Parameters:
+    ///   - splitsThroughExpressionEnd:
+    ///   - lastLeftBracketIndex: index of last left bracket "[" in splitsThroughExpressionEnd
+    /// - Returns: start index.
+    ///   If element before x is digits, returns index of digits.
+    ///   else returns lastLeftBracketIndex
+    static func expressionStartIndex(splitsThroughExpressionEnd: [String],
+                                     lastLeftBracketIndex: Int) -> Int {
+
+        var expressionStartIndex = lastLeftBracketIndex
+
+        // number of elements in multiplier, "[", letters, "]"
+        let multiplierLeftLettersRightCount = 4
+
+        if splitsThroughExpressionEnd.count >= multiplierLeftLettersRightCount
+            && splitsThroughExpressionEnd[lastLeftBracketIndex - 1].isDigits() {
+            expressionStartIndex = lastLeftBracketIndex - 1
+        }
+        return expressionStartIndex
+    }
+
+    /// - Parameter expression: an array with starting index 0, not a slice of another array
+    ///   a valid expression should have count 0 or 3 or 4.
+    /// - Returns: multiplier Int(digits) if expression starts with digits, else 1.
+    static func multiplier(expression: [String]) -> Int {
+
+        guard let expressionFirst = expression.first else { return 1 }
+
+        // number of elements in multiplier, "[", letters, "]"
+        let multiplierLeftLettersRightCount = 4
+
+        var currentMultiplier = 1
+
+        if expression.count >= multiplierLeftLettersRightCount
+            && expressionFirst.isDigits() {
+            // expect multiplier at expressionFirst
+            currentMultiplier = Int(expressionFirst) ?? 1
+        }
+        return currentMultiplier
     }
 
     // TODO: Consider delete unused method.

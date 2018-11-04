@@ -77,6 +77,18 @@ class ExpanderTests: XCTestCase {
                        ["ab", "3", "[", "cdddd", "]"])
     }
 
+    func testMultiplierExpression() {
+        XCTAssertEqual(Expander.multiplier(expression: [""]), 1)
+        XCTAssertEqual(Expander.multiplier(expression: ["2", "[", "a", "]"]), 2)
+        XCTAssertEqual(Expander.multiplier(expression: ["3", "[", "ab", "]"]), 3)
+        XCTAssertEqual(Expander.multiplier(expression: ["3", "[", "ab", "]", "4", "[", "c", "]"]), 3)
+    }
+
+    func testMultiplierExpressionMalformed() {
+        XCTAssertEqual(Expander.multiplier(expression: ["ab"]), 1)
+        XCTAssertEqual(Expander.multiplier(expression: ["[5]"]), 1)
+    }
+
     func testMultiplierNil() {
         XCTAssertNil(Expander.multiplier(""))
         XCTAssertNil(Expander.multiplier("[a]"))
