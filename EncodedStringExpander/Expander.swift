@@ -220,6 +220,9 @@ struct Expander {
 
         if expression.count == 1 {
             let expressionFirst = expression.first ?? ""
+            
+            if expressionFirst.isEmpty { return "" }
+
             if expressionFirst.isNotDigitsAndNotSquareBrackets() {
                 return expressionFirst
             } else {

@@ -104,4 +104,21 @@ class ExpanderTests: XCTestCase {
         XCTAssertNil(Expander.multiplier("[5]"))
     }
 
+    func testLetters() {
+        XCTAssertEqual(Expander.letters(expression: [""]), "")
+        XCTAssertEqual(Expander.letters(expression: ["a"]), "a")
+        XCTAssertEqual(Expander.letters(expression: ["2", "[", "a", "]"]), "a")
+        XCTAssertEqual(Expander.letters(expression: ["3", "[", "ab", "]"]), "ab")
+    }
+
+    func testLettersNil() {
+        XCTAssertNil(Expander.letters(expression: ["2"]))
+        XCTAssertNil(Expander.letters(expression: ["["]))
+    }
+
+    func testLettersExpressionTooLong() {
+        let expression = ["3", "[", "[", "ab", "]", "4", "[", "c", "]", "]"]
+        XCTAssertEqual(Expander.letters(expression: expression), "ab")
+    }
+
 }
